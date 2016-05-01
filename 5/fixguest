@@ -24,7 +24,6 @@ fi
 cd $myhome
 
 rm -rf * $(find . -name ".[a-zA-Z0-9]*" -print)
-TR: does this still need to be done? /Liz
 
 # Now the only thing present should be the ..template directory.
 
