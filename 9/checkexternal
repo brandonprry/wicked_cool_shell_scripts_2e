@@ -1,0 +1,53 @@
+#!/bin/bash 
+
+# checkexternal-traverse-T all URLs on a Webwsite to build a
+#   list of external references, then check each one to ascertain
+#   which might be dead or otherwise broken. The -a flag forces the
+#   script to list all matches, whether they're accessible or not; by
+#   default, only unreachable links are shown.
+
+listall=0; errors=0; checked=0
+
+if [ "$1" = "-a" ] ; then
+  listall=1; shift
+fi
+
+if [ -z "$1" ] ; then
+  echo "Usage: $(basename $0) [-a] URL" >&2 ; exit 1
+fi
+
+trap "`which rm` -f traverse*.errors reject*.dat traverse*.dat" 0
+
+outfile="$(echo "$1" | cut -d/ -f3).errors.ext"
+URLlist="$(echo $1 | cut -d/ -f3 | sed 's/www\.//').rejects"
+
+rm -f $outfile     # Ready for new output
+
+if [ ! -e "$URLlist" ] ; then
+  echo "File $URLlist not found. Please run checklinks first." >&2; exit 1
+fi
+
+if [ ! -s "$URLlist" ] ; then
+  echo "There don't appear to be any external links ($URLlist is empty)" >&2
+  exit 1
+fi
+
+#### Now, finally, we're ready to begin...
+
+for URL in $(cat $URLlist | sort | uniq)
+do
+  curl -s "$URL" > /dev/null 2>&1; return=$?
+  if [ $return -eq 0 ] ; then
+    if [ $listall -eq 1 ] ; then
+      echo "$URL is fine."
+    fi
+  else
+    echo "$URL fails with error code $return"
+    errors=$(( $errors + 1 ))
+  fi
+  checked=$(( $checked + 1 ))
+done
+
+echo ""
+echo "Done. Checked $checked URLs and found $errors errors."
+exit 0
