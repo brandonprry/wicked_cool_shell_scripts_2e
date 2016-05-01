@@ -1,0 +1,88 @@
+#!/bin/bash 
+
+# changetrack--Tracks a given URL and, if it's changed since the last
+#   visit, emails the new page to the specified address.
+
+sendmail=$(which sendmail)         
+sitearchive="/tmp/changetrack"
+tmpchanges="$sitearchive/changes.$$"  # Temp file
+fromaddr="webscraper@intuitive.com"
+dirperm=755        # read+write+execute for dir owner
+fileperm=644       # read+write for owner, read only for others
+
+trap "$(which rm) -f $tmpchanges" 0 1 15  # Remove temp file on exit
+
+if [ $# -ne 2 ] ; then
+  echo "Usage: $(basename $0) url email" >&2
+  echo "  tip: to have changes displayed on screen, use email addr '-'" >&2
+  exit 1
+fi
+
+if [ ! -d $sitearchive ] ; then
+  if ! mkdir $sitearchive ; then
+    echo "$(basename $0) failed: couldn't create $sitearchive." >&2
+    exit 1
+  fi
+  chmod $dirperm $sitearchive
+fi
+
+if [ "$(echo $1 | cut -c1-5)" != "http:" ] ; then
+  echo "Please use fully qualified URLs (e.g. start with 'http://')" >&2
+  exit 1
+fi
+
+fname="$(echo $1 | sed 's/http:\/\///g' | tr '/?&' '...')"
+baseurl="$(echo $1 | cut -d/ -f1-3)/"
+
+# Grab a copy of the Web page and put it in an archive file. Note that we 
+#   can track changes by looking just at the content (that is, -dump, not
+#   -source), so we can skip any HTML parsing....
+
+lynx  -dump "$1" | uniq > $sitearchive/${fname}.new
+
+if [ -f "$sitearchive/$fname" ] ; then
+  # We've seen this site before, so compare the two with diff.
+  diff $sitearchive/$fname $sitearchive/${fname}.new > $tmpchanges
+  if [ -s $tmpchanges ] ; then
+    echo "Status: Site $1 has changed since our last check."
+  else
+    echo "Status: No changes for site $1 since last check"
+    rm -f $sitearchive/${fname}.new     # Nothing new...
+    exit 0                              # No change--we're outta here.
+  fi
+else
+  echo "Status: first visit to $1. Copy archived for future analysis."
+  mv $sitearchive/${fname}.new $sitearchive/$fname
+  chmod $fileperm $sitearchive/$fname
+  exit 0
+fi
+
+# If we're here, the site has changed, and we need to send the contents
+#   of the .new file to the user and replace the original with the .new
+#   for the next invocation of the script.
+
+if [ "$2" != "-" ] ; then
+
+( echo "Content-type: text/html"
+  echo "From: $fromaddr (Web Site Change Tracker)"
+  echo "Subject: Web Site $1 Has Changed"
+  echo "To: $2"
+  echo ""
+
+   curl -s -dump $1 | \
+   sed -e "s|src=\"|SRC=\"$baseurl|gi" \
+       -e "s|href=\"|HREF=\"$baseurl|gi" \
+       -e "s|$baseurl\/http:|http:|g"
+) | $sendmail -t
+
+else
+  # Just showing the differences on the screen– is ugly. Solution?
+
+  diff $sitearchive/$fname $sitearchive/${fname}.new
+fi
+
+# Update the saved snapshot of the website.
+
+mv $sitearchive/${fname}.new $sitearchive/$fname
+chmod 755 $sitearchive/$fname
+exit 0
