@@ -12,7 +12,7 @@ fi
 
 for filename
 do
-   identify -format "%[EXIF:GPSL*]" "$filename" > $tempfile
+  identify -format "%[EXIF:*]" "$filename" | grep GPSL > $tempfile
 
   latdeg=$(head -1 $tempfile | cut -d, -f1 | cut -d= -f2)
   latdeg=$(scriptbc -p 0 $latdeg)
