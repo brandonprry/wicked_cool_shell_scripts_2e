@@ -11,6 +11,11 @@ Sourcing the ```wcss_shell.sh``` script will set up your bash environment so tha
 Chapters and layout
 ---
 
+**Chapter 0: Crash Course**
+
+This chapter focuses on bringing a novice command line user up to speed regarding what shell scripts are, how to build them, and why they are useful.
+
+
 **Chapter 1: The Missing Code Library**
 
 Programming languages in the Unix environment, particularly C, Perl, or Python have extensive libraries of useful functions and utilities to validate number formats, calculate date offsets, and perform many more useful tasks. When working with the shell, we’re left much more on our own, so this first chapter focuses on various tools and hacks to make shell scripts more friendly, both throughout the book and within our own scripts. I’ve included various input validation functions, a simple but powerful scriptable front-end to bc, a tool for quickly adding commas to improve the presentation of very large numbers, a technique for sidestepping Unixes that don’t support the helpful -n flag to echo, and an include script for using ANSI color sequences in scripts.
