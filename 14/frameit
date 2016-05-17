@@ -56,9 +56,9 @@ if [ ! -z "$frame" -a ! -z "$border" ] ; then
 fi
 
 if [ ! -z "$border" ] ; then
-  args="-border $border -color $bordercolor"
+  args="-bordercolor $bordercolor -border $border"
 else
-  args="-frame $frame -mattecolor $mattecolor"
+  args="-mattecolor $mattecolor -frame $frame"
 fi
 
 
