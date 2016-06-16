@@ -3,8 +3,7 @@
 #   manner, suitable for sharing with others, or for 
 #   synchronizing 
 
-#   (with diff) iTunes libraries on different
- computers and laptops.
+#   (with diff) iTunes libraries on dt computers and laptops.
 
 itunehome="$HOME/Music/iTunes"
 ituneconfig="$itunehome/iTunes Music Library.xml"
