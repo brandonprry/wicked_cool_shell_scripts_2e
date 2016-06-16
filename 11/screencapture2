@@ -1,0 +1,36 @@
+#!/bin/bash
+# screencapture2 - -Use the Mac screencapture command to capture a sequence of
+#    screenshots of the main window, in stealth mode. Handy if you're in a
+#    questionable computing environment!
+
+capture="`which screencapture` -x -m -C"
+freq=60         # every Every 60 seconds
+maxshots=30     # max Max screen captures
+animate=0     # create Ceate animated gif? No.
+
+while getopts "af:m" opt; do
+  case $opt in
+   a ) animate=1;                  ;;
+   f ) freq=$OPTARG;               ;;
+   m ) maxshots=$OPTARG;           ;;  # quit after specified num of pics
+   ? ) echo "Usage: $0 [-a] [-f frequency] [-m maxcaps]" >&2
+       exit 1
+  esac
+done
+
+counter=0
+
+while [ $counter -lt $maxshots ] ; do
+  $capture capture${counter}.jpg   # cCounter keeps incrementing.
+  counter=$(( counter + 1 ))
+  sleep $freq   # freq is therefore the number of seconds between pics.
+done
+
+# Now, optionally, compress all the individual images into an animated GIF.
+
+if [ $animate -eq 1 ] ; then
+  convert -delay 100 -loop 0 -resize "33%" capture* animated-captures.gif
+fi
+
+# No exit status to stay stealthy
+exit 0 
