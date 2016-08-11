@@ -1,0 +1,18 @@
+#!/bin/bash
+
+while getopts "o:ifn" arg; do
+  case "$opt" in
+    o ) output="$OPTARG";       ;;   # Getopts automatically manages OPTARG.
+    i ) btype="incremental";    ;;
+    f ) btype="full";           ;;
+    n ) noinc=1;                ;;
+    ? ) usageQuit               ;;
+  esac
+done
+
+shift $(( $OPTIND - 1 ))
+
+for i in $@
+do
+  mv $i $(echo $i | sed -
+done
