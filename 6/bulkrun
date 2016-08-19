@@ -25,15 +25,20 @@ then
 fi
 
 total=$(ls $inputdir | wc -l)
-
+files="$(ls -Sr $inputdir)"
 
 for k in $(seq 1 $procs $total)
 do
-  for i in $(seq 0 `expr $total - $procs \* $(echo "$((k / procs))") - 1`)
+  for i in $(seq 0 $procs)
   do
-    file=$(ls -Sr $inputdir | sed $(expr $i + $k)"q;d")
-    echo "running $command $inputdir/$file"
-    $command $inputdir/$file&
+    if [ $((i+k)) -gt $total ]
+    then
+      exit 0
+    fi
+
+    file=$(echo "$files" | sed $(expr $i + $k)"q;d")
+    echo "Running $command $inputdir/$file"
+    $command "$inputdir/$file"&
   done
 
   wait
