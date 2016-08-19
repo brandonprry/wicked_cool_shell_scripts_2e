@@ -1,0 +1,18 @@
+#!/bin/bash
+
+cores=$1
+inputdir=$2
+command=$3
+total=`ls $inputdir | wc -l`
+
+for k in `seq 1 $cores $total`
+do
+	for i in `seq 0 $(expr $cores - 1)`
+	do
+		file=`ls -Sr $inputdir | sed $(expr $i + $k)"q;d"`
+		echo "running $command $file"
+		$command $file
+	done
+
+	wait
+done
