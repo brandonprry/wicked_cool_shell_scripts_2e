@@ -33,6 +33,7 @@ do
   do
     if [ $((i+k)) -gt $total ]
     then
+      wait
       exit 0
     fi
 
