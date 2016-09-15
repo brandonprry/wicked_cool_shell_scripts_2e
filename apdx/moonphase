@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# Format of Moongiant.com query  
+#      http://www.moongiant.com/phase/MM/DD/YYYY
+
+
+# if no date specified, just use "today":
+
+if [ $# -eq 0 ] ; then
+  thedate="today"
+else
+  # date specified. Let's check to see if it's in the right format
+   mon="$(echo $1 | cut -d/ -f1)"
+   day="$(echo $1 | cut -d/ -f2)"
+  year="$(echo $1 | cut -d/ -f3)"
+
+  if [ -z "$year" -o -z "$day" ] ; then	    # zero length?
+    echo "Error: only valid date format is MM/DD/YYYY"
+    exit 1
+  fi
+  
+  # You could add additional date checking code here, or invoke
+  # the earlier script checkdate
+
+  thedate="$1" # no error checking = dangerous
+fi
+
+echo checking moon phase for day = $thedate
+
+url="http://www.moongiant.com/phase/$thedate"
+pattern="Illumination:"
+
+phase="$( curl -s "$url" | grep "$pattern" | tr ',' '\
+' | grep "$pattern" | sed 's/[^0-9]//g')"
+
+# format from this is     "Illumination: <span>74%\n<\/span>"
+
+if [ "$thedate" = "today" ] ; then
+  echo "Today the moon is ${phase}% illuminated."
+else
+  echo "On $thedate the moon = ${phase}% illuminated."
+fi
+
+exit 0
