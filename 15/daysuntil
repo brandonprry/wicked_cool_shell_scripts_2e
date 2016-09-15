@@ -5,7 +5,7 @@
 
 # Like the previous script, use `which gdate` if you are on OS X
 # If you are on Linux, use `which date`
-date="`which gdate`"
+date="`which date`"
 
 function daysInMonth
 {

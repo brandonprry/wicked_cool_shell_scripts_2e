@@ -7,11 +7,6 @@ if [ $# -ne 3 ] ; then
   exit 1
 fi
 
-if [ $3 -lt 1000 ] ; then 
-  echo "$(basename $0): Year has to be 1000 or greater." >&2
-  exit 1
-fi
-
 date --version > /dev/null 2>&1 	# discard error, if any
 baddate="$?"				# just look at return code
 

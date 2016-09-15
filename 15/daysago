@@ -4,7 +4,7 @@
 
 # If you are on Linux, this should only be `which date`
 # If you are on OS X, install coreutils with brew or from source for gdate
-date="`which gdate`"  
+date="`which date`"  
 
 function daysInMonth
 {
