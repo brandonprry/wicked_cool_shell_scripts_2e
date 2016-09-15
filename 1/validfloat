@@ -51,17 +51,6 @@ validfloat()
         return 1
       fi
     fi
-
-    # Test for numeric formats like ".33" and "-.33", both of which we
-    #   are going to consider as invalid floating point numbers. Why? 
-    #   Because requiring a leading zero is a common convention 
-    #   for GNU/Linux programs. If you're OK with these formats being valid,
-    #   here’s where you’d want to update the conditional test.
-    if [ "$decimalPart" = "-" -o -z "$decimalPart" ] ; then
-      if [ -z $fractionalPart ] ; then
-        echo "Invalid floating-point format." >&2 ; return 1
-      fi
-    fi
   else 
     # If the entire value is just "-", that’s not good either.
     if [ "$fvalue" = "-" ] ; then
