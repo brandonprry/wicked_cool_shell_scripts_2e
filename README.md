@@ -43,7 +43,7 @@ The internet is ubiquitous in this day and age. This chapter includes a bunch of
 
 **Chapter 8: Webmaster Hacks**
 
-The other side of the web coin, of course, is when you run a website, either from your own Unix system or on a shared server elsewhere on the network. If you’re a webmaster, the scripts in this chapter offer quite interesting tools for building web pages on the fly, processing contact forms, building a web-based photo album, and even the ability to log web searches. This chapter also includes a text counter and complete guest book implementation, all as shell scripts.
+The other side of the web coin, of course, is when you run a website, either from your own Unix system or on a shared server elsewhere on the network. If you’re a webmaster, the scripts in this chapter offer quite interesting tools for building web pages on the fly, processing contact forms, building a web-based photo album, and even the ability to log web searches.
 
 
 **Chapter 9 and Chapter 10: Web and Internet Administration**
