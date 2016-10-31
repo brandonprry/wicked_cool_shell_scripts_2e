@@ -14,7 +14,7 @@ sent=$(curl -s $base_url"getsentbyaddress/"$1)
 first_made=$(curl -s $base_url"addressfirstseen/"$1)
 
 echo "Details for address $1"
-echo -e "\tFirst seen: "'date -d @$first_made'
+echo -e "\tFirst seen: "$(date -d @$first_made)
 echo -e "\tCurrent balance: "$balance
 echo -e "\tSatoshis sent: "$sent
 echo -e "\tSatoshis recv: "$recv
