@@ -21,12 +21,14 @@ fi
 # Parse all options looking for '-f'
 
 flags=""
+recursive="off"
 
 while getopts "dfiPRrvW" opt
 do
   case $opt in
     f ) exec $realrm "$@"     ;;  # exec lets us exit this script directly.
-    * ) flags="$flags -$opt"  ;;  # other flags are for 'rm', not us
+		r | R ) recursive="on"    ;&
+    * ) flags="$flags -$opt"  ;;&  # other flags are for 'rm', not us
   esac
 done
 shift $(( $OPTIND - 1 ))
@@ -48,8 +50,10 @@ fi
 for arg 
 do
   newname="$archivedir/$(date "+%S.%M.%H.%d.%m").$(basename "$arg")"
-  if [ -f "$arg" -o -d “$arg” ] ; then
+  if [ -f "$arg" ] ; then
     $copy "$arg" "$newname"	
+	elif [  -d "$arg" ] && [ "$recursive"="on" ]; then
+		$copy "$arg" "$newname"
   fi
 done
 
