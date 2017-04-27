@@ -20,8 +20,7 @@ cd $archivedir
 # If given no arguments, just show a listing of the deleted files
 if [ $# -eq 0 ] ; then
   echo "Contents of your deleted files archive (sorted by date):"
-  ls -FC | sed -e 's/\([[:digit:]][[:digit:]]\.\)\{5\}//g' \
-    -e 's/^/  /' 
+  ls -F | sed -e 's/\([[:digit:]][[:digit:]]\.\)\{5\}//g' | uniq 
   exit 0
 fi
 
