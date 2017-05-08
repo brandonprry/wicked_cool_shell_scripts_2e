@@ -12,7 +12,7 @@ fi
 ( netstat -s -p tcp > $temp
 
 # Check your log file the first time this is run: some versions of netstat 
-# report more than one line, which is why the “| head -1” is used here.
+# report more than one line, which is why the "| head -1" is used here.
 sent="$(grep 'packets sent' $temp | cut -d\  -f1 | sed 
 's/[^[:digit:]]//g' | head -1)"
 resent="$(grep 'retransmitted' $temp | cut -d\  -f1 | sed 's/[^[:digit:]]//g')"

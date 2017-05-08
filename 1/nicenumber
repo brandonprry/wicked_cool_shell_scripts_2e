@@ -14,7 +14,7 @@ nicenumber()
   decimal=$(echo $1 | cut -d. -f2)        # right of the decimal
 
   # Check if our number has more than just the integer part.
-  if [ “$decimal” != “$1” ]; then
+  if [ "$decimal" != "$1" ]; then
     # There's a fractional part, so let's include it.
     result="${DD:= '.'}$decimal"
   fi

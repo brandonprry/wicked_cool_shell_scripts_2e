@@ -5,7 +5,7 @@
 width=72
 
 if [ ! -r "$1" ] ; then
-  echo “Cannot read file $1” >&2
+  echo "Cannot read file $1" >&2
   echo "Usage: $0 filename" >&2; exit 1
 fi
 

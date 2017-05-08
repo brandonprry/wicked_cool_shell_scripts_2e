@@ -4,7 +4,7 @@
 # files into the sync folder in Dropbox, then launching Dropbox.app as
 # needed 
 
-name=”syncdropbox”
+name="syncdropbox"
 dropbox="$HOME/Dropbox"
 sourcedir=""
 targetdir="sync"		# Target folder on Dropbox for individual files

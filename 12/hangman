@@ -10,7 +10,7 @@ games=0
 
 # Start by testing for our word library datafile
 
-if [ ! -r “$wordlib” ] ; then
+if [ ! -r "$wordlib" ] ; then
   echo "$0: Missing word library $wordlib" >&2
   echo "(online: http://www.intuitive.com/wicked/examples/long-words.txt" >&2
   echo "save the file as $wordlib and you're ready to play!)" >&2
@@ -36,7 +36,7 @@ while [ "$guess" != "quit" ] ; do
   while [ "$guess" != "$match" -a "$guess" != "quit" ] ; do
 
     echo ""
-    if [ ! -z "$guessed" ] ; then   # remember, ! –z means “is not empty”
+    if [ ! -z "$guessed" ] ; then   # remember, ! –z means "is not empty"
       /bin/echo -n "Guessed: $guessed, "
     fi
     echo "Steps from gallows: $bad, word so far: $partial"

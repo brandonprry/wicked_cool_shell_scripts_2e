@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # formatdir--Outputs a directory listing in a friendly and useful format.
-# Note that you need to ensure “scriptbc” (script #9) is in your current path
+# Note that you need to ensure "scriptbc" (script #9) is in your current path
 #   because it's invoked within more than once.
 
 # Function to format sizes in Kb to Kb, Mb, or Gb for more readable output.

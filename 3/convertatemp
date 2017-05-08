@@ -39,7 +39,7 @@ in
   ;;
 
   *)
-  echo “Given temperature unit is not supported”
+  echo "Given temperature unit is not supported"
   exit 1
 esac  
 

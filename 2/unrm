@@ -57,8 +57,8 @@ if [ $matches -gt 1 ] ; then
   echo ""
   echo -n "Which version of $1 do you want to restore ('0' to quit)? [1] : "
   read desired
-  if [ ! -z “$(echo $desired | sed 's/[[:digit:]]//g')” ] ; then
-    echo “$0: Restore canceled by user: invalid input.” >&2
+  if [ ! -z "$(echo $desired | sed 's/[[:digit:]]//g')" ] ; then
+    echo "$0: Restore canceled by user: invalid input." >&2
     exit 1
   fi
 
