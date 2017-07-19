@@ -38,7 +38,7 @@ EOF
 
   sleep $secs
 
-  jobs=$(ps -u $1 | cut -d\  -f1)
+  jobs=$(ps --no-headers -u $1 | sed 's/^[\t ]*//' | cut -d\  -f1)
 
   kill -s HUP $jobs                  # send hangup sig to their processes
   sleep 1                            # give it a second...
